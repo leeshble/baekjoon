@@ -1,3 +1,8 @@
+/*
+ * Memory: 14140KB
+ * Time: 128ms
+ */
+
 package basic_math;
 
 import java.io.BufferedReader;
@@ -11,7 +16,11 @@ import java.util.Iterator;
 import java.util.StringTokenizer;
 
 public class A2960 {
-
+	static int n;
+	static int k;
+	static int count;
+	
+	
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		
@@ -19,52 +28,29 @@ public class A2960 {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
 		br.close();
-		int n = Integer.parseInt(st.nextToken().toString());
-		int k = Integer.parseInt(st.nextToken().toString());
+		n = Integer.parseInt(st.nextToken());
+		k = Integer.parseInt(st.nextToken());
 		
-		ArrayList<Integer> array = new ArrayList<Integer>();
-		for (int i = 2; i <= n ; i++) {
-			array.add(i);
-		}
+		count = 0;
 		
-		int count = 0;
-		int output = 0;
-		for (int i = 0; i < k; i++) {
-			for (int j = 0; j < array.size(); j++) {
-				int data = array.get(j);
-				if (n % data == 0) {
-					if (count == k) {
-						output = array.get(j);
-					}
-					array.remove(j);
+		bw.write(String.valueOf(erato()));
+		bw.flush();
+		bw.close();
+	}
+	
+	public static int erato() {
+		boolean[] array = new boolean[n + 1];
+		for (int i = 2; i <= n; i++) {
+			for (int j = i; j <= n; j += i) {
+				if (!array[j]) {
+					array[j] = true;
 					count++;
+				}
+				if (count == k) {
+					return j;
 				}
 			}
 		}
-		bw.write(String.valueOf(output));
-		bw.flush();
-		bw.close();
-//		long start, end;
-//		
-//		ArrayList<Integer> array = new ArrayList<Integer>(Arrays.asList(2, n));
-//		int output;
-//		
-//		for (int i = 2; i < n; i++) {
-//			array.add(i);
-//		}
-//		int count = 0;
-//		for (int i = 0; i < array.size(); i++) {
-//			int p = array.get(i);
-//			for (int j = 0; j <= n; j += p) {
-//				if (array.contains(j)) {
-//					count++;
-//					if (count == k) {
-//						System.out.println(p);
-//					} else {
-//						array.remove(j);
-//					}
-//				}
-//			}
-//		}
+		return 0;
 	}
 }
