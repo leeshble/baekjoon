@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-public class A2750 {
+public class A2750selection {
 
 	static int input;
 	static int[] array;
