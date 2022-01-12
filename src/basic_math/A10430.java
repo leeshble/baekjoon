@@ -30,7 +30,7 @@ public class A10430 {
 		bw.write(((a * b) % c) + "\n");
 		bw.write((((a % c) * (b % c)) % c) + "\n");
 		bw.flush();
-		bw.close();		
+		bw.close();	
 	}
 
 }

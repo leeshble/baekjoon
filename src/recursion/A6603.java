@@ -21,14 +21,14 @@ public class A6603 {
 		
 		while(true) {
 			st = new StringTokenizer(br.readLine(), "");
-			k = Integer.parseInt(st.nextToken().toString());
+			k = Integer.parseInt(st.nextToken());
 				if (k == 0) {
 				break;
 			}
 			queue = new int[k];
 			visited = new boolean[k];
 			for (int i = 0; i < k; i++) {
-				queue[i] = Integer.parseInt(st.nextToken().toString());
+				queue[i] = Integer.parseInt(st.nextToken());
 			}
 			dfs(0, 0);
 			System.out.print("\n");
