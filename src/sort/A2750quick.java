@@ -2,7 +2,6 @@
  * 퀵 정렬
  * 
  * Memory: 14484KB
- * 
  * Time: 132ms
  */
 
@@ -47,7 +46,7 @@ public class A2750quick {
 		
 		//start, end 순이 end, start 순이 될떄까지 반복
 		while (i <= j) {
-
+			
 			//pivot에 든 수보다 start에 든 값이 큰 상황일때까지 start의 위치를 뒤로 이동
 			while (array[i] < pivot) {
 				i++;
