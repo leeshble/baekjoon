@@ -1,10 +1,3 @@
-/*
- * 삽입정렬
- * 
- * Memory: 14492KB
- * Time: 148ms
- */
-
 package sort;
 
 import java.io.BufferedReader;
@@ -13,12 +6,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-public class A2750insertion {
-	
+public class A2751shell {
+
 	static int input;
 	static int[] array;
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException{
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -29,7 +22,7 @@ public class A2750insertion {
 			array[i] = Integer.parseInt(br.readLine());
 		}
 		br.close();
-		insertionSort();
+		cellSort();
 		for (int val : array) {
 			sb.append(val).append("\n");
 		}
@@ -38,17 +31,26 @@ public class A2750insertion {
 		bw.close();
 	}
 
-	static void insertionSort() {
-		int key; //key를 담는 곳
-		int j = 0;	//비교할 숫자 index
-		//key 기준
-        for(int i = 1; i < input; i++){
-            key = array[i]; //key값 담기
-            //현재 기준 이전꺼 탐새하기 위해 -1
-            for(j = i - 1; j >= 0 && key < array[j]; j--){	//0과 같거나 크고 key가 비교할 숫자보다 작을때 반복문 끝
-            	array[j+1] = array[j]; // 비교 숫자를 뒤로 이동
-            }
-            array[j+1] = key; //탐색이 종료된 곳에 key를 넣음
-        }
+	static void cellSort() {
+		for (int gap = input / 2; gap > 0; gap /= 2) {	//처음엔 배열의 반을 나눈 값을 이용
+			if (gap % 2 == 0) {	//짝수일 경우 
+				gap++;
+			}
+			for (int i = 0; i < gap; i++) {
+				insertionSort(i, input - 1, gap);
+			}
+		}
 	}
+	
+	static void insertionSort(int first, int last, int gap) {
+		int j, key;
+		for (int i = first + gap; i <= last; i += gap) {
+			key = array[i];
+			for (j = i - gap; j >= first && array[j] > key; j -= gap) {
+				array[j + gap] = array[j];
+			}
+			array[j + gap] = key;
+		}
+	}
+	
 }
