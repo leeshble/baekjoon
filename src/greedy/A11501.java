@@ -42,5 +42,4 @@ public class A11501 {
 		bw.flush();
 		bw.close();
 	}
-
 }
