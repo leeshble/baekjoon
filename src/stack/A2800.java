@@ -3,104 +3,79 @@ package stack;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Stack;
 
 public class A2800 {
-
-	static Stack<Integer> stack1;
-	static Stack<Integer> stack2;
-	static HashSet<String> outputHash = new HashSet<>();
 	
-	public static void main(String[] args) throws IOException{
-		// TODO Auto-generated method stub
+	static StringBuilder sb;
+	static Stack<Integer> stack;
+	static HashSet<String> outputData;
+	static boolean[] check;
+	static int[] pair;
+	static String input;
+	
+	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		sb = new StringBuilder();
 		
-		String data;
-		int dataLength;
-		char pointer;
+		//입력받기
+		input = br.readLine();
 		
-		data = br.readLine();
-		br.close();
-		dataLength = data.length();
-		stack1 = new Stack<>();
-		stack2 = new Stack<>();
-		for (int i = 0; i < dataLength; i++) {
-			pointer = data.charAt(i);
-			if (pointer == '(') {
-				stack1.push(i);
+		int inputLength = input.length();
+		pair = new int[inputLength];	//괄호의 
+		check = new boolean[inputLength];
+		stack = new Stack<>();
+		
+		for (int i = 0; i < inputLength; i++) {
+			char pointer = input.charAt(i);
+			if(pointer == '(') {
+				stack.push(i);
 			} else if (pointer == ')') {
-				stack2.push(i);
+				pair[i] = stack.peek();
+				pair[stack.peek()] = i;
+				stack.pop();
 			}
 		}
-		int stack1Size = stack1.size();
-		String maxBinary = maxBinaryMaker(stack1Size);
-		int maxBinaryInteger = Integer.parseInt(maxBinary, 2);
-		deleteBrackets(stack1Size, maxBinaryInteger, data, dataLength);
 		
-		String[] output = outputHash.toArray(new String[0]);
-		StringBuilder sb = new StringBuilder();
+		outputData = new HashSet<>();
+		dfs(0, inputLength);
+		ArrayList<String> outputSorted = new ArrayList<>(outputData);
+		Collections.sort(outputSorted);
+		
+		String[] output = outputSorted.toArray(new String[0]);
 		int outputLength = output.length;
-		for (int i = outputLength - 1; i >= 0; i--) {
+		for (int i = 1; i < outputLength; i++) {
 			sb.append(output[i]).append("\n");
 		}
 		System.out.print(sb.toString());
 	}
 	
-	static String maxBinaryMaker(int i) {
-		StringBuilder sb = new StringBuilder();
-		for (int j = 0; j < i; j++) {
-			sb.append("1");
-		}
-		return sb.toString();
-	}
-	
-	static String leftBinaryMaker(int maxSize, String pointBinary) {
-		StringBuilder sb = new StringBuilder();
-		int leftLength = maxSize - pointBinary.length();
-		for (int i = 0; i < leftLength; i++) {
-			sb.append(0);
-		}
-		sb.append(pointBinary);
-		return sb.toString();
-	}
-	
-	static void deleteBrackets(int stackSize, int maxBinaryInteger, String data, int dataLength) {
-		Object[] stack1Array = stack1.toArray();
-		Object[] stack2Array = new Object[stackSize];
-		//stack2 reverse
-		for (int i = stackSize - 1, j = 0; i >= 0; i--, j++) {
-			stack2Array[j] = stack2.elementAt(i);
-		}
-		
-		
-		for (int i = 0; i < maxBinaryInteger; i++) {
-			String pointBinary = leftBinaryMaker(stackSize, Integer.toBinaryString(i + 1));
-			//System.out.println("pointBianry "+pointBinary);
-			Stack<Integer> deleteStack = new Stack<>();
-			
-			//get index for delete
-			for (int j = 0; j < stackSize; j++) {
-				if (pointBinary.charAt(j) == '1') {
-					deleteStack.push((int)stack1Array[j]);
-					deleteStack.push((int)stack2Array[j]);
-				}
-			}
-			//System.out.println("delete1Stack "+delete1Stack);
-			//System.out.println("delete2Stack "+delete2Stack);
-			
-			//start delete
-			String[] outputData = new String[dataLength];
-			outputData = data.split("");
-			int deleteStackSize = deleteStack.size();
-			for (int j = 0; j < deleteStackSize; j++) {
-				outputData[deleteStack.elementAt(j)] = "";
-			}
-			String output = String.join("", outputData);
-			
-			//add to hash for delete duplicate output
-			outputHash.add(output.toString());
+	static void dfs(int deptNow, int dept) {
+		if (deptNow != dept) {
+			char ch = input.charAt(deptNow);
+	        if(ch == '(') {
+	            check[deptNow] = true;
+	            dfs(deptNow+1, dept);  // 해당 쌍의 괄호를 지우는 경우
+	            check[deptNow] = false;
+	        }
+
+	        if(ch == ')' && check[pair[deptNow]]) {  // 나와 쌍인 '('가 지워져있는지 체크
+	            check[deptNow] = true;  // 사실 이어져있는 괄호 쌍은 하나뿐이라 여기서 굳이 check 건드릴 필요는 없긴 함
+	            dfs(deptNow + 1, dept);
+	            check[deptNow] = false;
+	        }else {  // 괄호 안 지우는 경우 or 숫자일 경우
+	            sb.append(ch);
+	            dfs(deptNow + 1, dept);
+	            sb.deleteCharAt(sb.length() - 1);
+	        }
+		} else {
+			outputData.add(sb.toString());
+			return;
 		}
 	}
+
 }
