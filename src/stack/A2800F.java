@@ -15,10 +15,12 @@ import java.util.Stack;
 
 public class A2800F {
 
+	/*
 	public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String input = br.readLine();
 
+        // 괄호 위치 큐에 저장
         Map<Integer, Integer> paren = new HashMap<>();
         List<Integer> parenIdx = new ArrayList<>();
         Stack<Integer> s = new Stack<>();
@@ -57,9 +59,8 @@ public class A2800F {
         output.sort(Comparator.naturalOrder());
         for(int i = 0; i < output.size(); i++)
             System.out.println(output.get(i));
-    }
+    }*/
 	
-	/*
 	static Stack<Integer> stack1;
 	static Stack<Integer> stack2;
 	static HashSet<String> outputHash = new HashSet<>();
@@ -125,28 +126,17 @@ public class A2800F {
 			stack2Array[j] = stack2.elementAt(i);
 		}
 		
-		calcLoop:
 		for (int i = 0; i < maxBinaryInteger; i++) {
 			String pointBinary = leftBinaryMaker(stackSize, Integer.toBinaryString(i + 1));
-			//System.out.println("pointBianry "+pointBinary);
 			Stack<Integer> deleteStack = new Stack<>();
 			
 			//get index for delete
 			for (int j = 0; j < stackSize; j++) {
-				
-				
 				if (pointBinary.charAt(j) == '1') {
-					int stack1ArrayData = (int)stack1Array[j];
-					int stack2ArrayData = (int)stack2Array[j];
-					
-					deleteStack.push(stack1ArrayData);
-					deleteStack.push(stack2ArrayData);
+					deleteStack.push((int)stack1Array[j]);
+					deleteStack.push((int)stack2Array[j]);
 				}
 			}
-			
-			
-			//System.out.println("delete1Stack "+delete1Stack);
-			//System.out.println("delete2Stack "+delete2Stack);
 			
 			//start delete
 			String[] outputData = new String[dataLength];
@@ -160,5 +150,5 @@ public class A2800F {
 			//add to hash for delete duplicate output
 			outputHash.add(output.toString());
 		}
-	}*/
+	}
 }

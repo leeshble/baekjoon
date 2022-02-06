@@ -26,7 +26,7 @@ public class A2800 {
 		input = br.readLine();
 		
 		int inputLength = input.length();
-		pair = new int[inputLength];	//괄호의 
+		pair = new int[inputLength];
 		check = new boolean[inputLength];
 		stack = new Stack<>();
 		
@@ -64,7 +64,7 @@ public class A2800 {
 	        }
 
 	        if(ch == ')' && check[pair[deptNow]]) {  // 나와 쌍인 '('가 지워져있는지 체크
-	            check[deptNow] = true;  // 사실 이어져있는 괄호 쌍은 하나뿐이라 여기서 굳이 check 건드릴 필요는 없긴 함
+	            check[deptNow] = true;
 	            dfs(deptNow + 1, dept);
 	            check[deptNow] = false;
 	        }else {  // 괄호 안 지우는 경우 or 숫자일 경우
