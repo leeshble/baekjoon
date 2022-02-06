@@ -30,12 +30,12 @@ public class A11724 {
 		}
 		
 		// dfs 돌리기
-		int count = 0;	// 첫째 줄에 연결된 요소 개수
+		int count = 0;	// 연결된 요소 개수
 		visit = new boolean[n + 1];
 		for (int i = 1; i < n + 1; i++) {
 			if (!visit[i]) {
 				dfs(i);
-				count++;	//한번 돌때마다 증가
+				count++;	// 한번 돌때마다 증가
 			}
 		}
 		System.out.print(count);
@@ -46,7 +46,7 @@ public class A11724 {
 		visit[i] = true;
 		
 		for (int j = 1; j <= n; j++) {
-			//인접행렬 값 1이고, 방문하지 않은 곳일때 dfs 탐색
+			// 인접행렬 값 1이고, 방문하지 않은 곳일때 dfs 탐색
 			if (map[i][j] == 1 && !visit[j]) {
 				dfs(j);
 			}
